@@ -2,7 +2,7 @@
 
 The objective of Money Tracker is to help you control your finances :blue_book:
 
-Third project at **Ironhack Madrid**, click [here](https://money-tracker-v1.vercel.app/) to checkout the project
+Final project at **Ironhack Madrid**, click [here](https://money-tracker-v1.vercel.app/) to checkout the project
 
 ## Built With
 
