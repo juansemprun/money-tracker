@@ -3,10 +3,18 @@ const mongoose = require('mongoose')
 const connectionString = process.env.DB_REMOTE
 
 // TEMPORARY DEBUG: the exact connection string with the password masked,
-// JSON.stringify makes any invisible character visible. Remove after diagnosing.
+// plus password diagnostics (never the value). Remove after diagnosing.
+const _pw = ((connectionString || '').match(/:[^:@]+@/) || [''])[0].slice(1, -1)
+let _pwDecode = 'ok'
+try { decodeURIComponent(_pw) } catch (e) { _pwDecode = 'FAILS: ' + e.message }
 console.error('[debug] DB_REMOTE masked:', JSON.stringify(
     (connectionString || '').replace(/:[^:@]+@/, ':***@')
 ))
+console.error('[debug] password diag:', JSON.stringify({
+    length: _pw.length,
+    hasPercent: _pw.includes('%'),
+    decodes: _pwDecode,
+}))
 
 mongoose
     .connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true })
