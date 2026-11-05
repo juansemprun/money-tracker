@@ -20,7 +20,8 @@ router.post("/demo-login", (req, res) => {
                     res.status(500).json({ message: 'Login error' })
                     return
                 }
-                res.status(200).json(demoUser)
+                req.session.isDemo = true
+                res.status(200).json({ ...demoUser.toObject(), isDemo: true })
             })
         })
         .catch(() => res.status(500).json({ message: 'Demo login error' }))
