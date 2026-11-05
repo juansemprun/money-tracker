@@ -14,7 +14,23 @@ import SnackBar from './../../shared/snackBar/SnackBar'
 const SignUpForm = props => {
   const classes = useStyles()
   const [handleSnackBar, setHandleSnackBar] = useState(false)
+  const [demoLoading, setDemoLoading] = useState(false)
   const { register, handleSubmit, errors } = useForm()
+
+  const onDemoLogin = () => {
+    setDemoLoading(true)
+    const authService = new authServices()
+    authService
+      .demoLogin()
+      .then(response => {
+        props.saveUser(response.data)
+        props.history.push('/dashboard')
+      })
+      .catch(() => {
+        setDemoLoading(false)
+        setHandleSnackBar(true)
+      })
+  }
 
   const onSubmit = formData => {
     const authService = new authServices()
@@ -61,6 +77,16 @@ const SignUpForm = props => {
         className={classes.submit}
       >
         Log in
+      </Button>
+      <Button
+        variant="outlined"
+        color="secondary"
+        fullWidth
+        className={classes.submit}
+        onClick={onDemoLogin}
+        disabled={demoLoading}
+      >
+        {demoLoading ? 'Preparing demo data…' : 'Try the demo user'}
       </Button>
       <Grid container justify="flex-end">
         <Grid item>

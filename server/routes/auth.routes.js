@@ -5,8 +5,26 @@ const passport = require("passport")
 const bcrypt = require("bcrypt")
 
 const User = require("../models/user.model")
+const { ensureDemoUser } = require("../services/demo.service")
 
 const salt = bcrypt.genSaltSync(10)
+
+// Exhibition mode: logs in (or creates) the read-only demo user with no
+// credentials required. Future: restrict this session to read-only.
+router.post("/demo-login", (req, res) => {
+
+    ensureDemoUser()
+        .then(demoUser => {
+            req.login(demoUser, (err) => {
+                if (err) {
+                    res.status(500).json({ message: 'Login error' })
+                    return
+                }
+                res.status(200).json(demoUser)
+            })
+        })
+        .catch(() => res.status(500).json({ message: 'Demo login error' }))
+})
 
 router.post("/signup", (req, res) => {
 
