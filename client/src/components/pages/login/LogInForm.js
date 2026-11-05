@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import { useStyles } from './styles/loginForm.styles'
 import { Grid, Button, TextField, Typography } from '@material-ui/core'
@@ -90,11 +89,9 @@ const SignUpForm = props => {
       </Button>
       <Grid container justify="flex-end">
         <Grid item>
-          <Link to="/signup">
-            <Typography variant="body2" color="primary">
-              Don't have an account? Sign Up
-            </Typography>
-          </Link>
+          <Typography variant="body2" color="textSecondary">
+            Registration is closed — try the demo user above
+          </Typography>
         </Grid>
       </Grid>
       {handleSnackBar && <SnackBar severity="error" message="Incorrect username or password" handleSnackBar={() => setHandleSnackBar()} />}

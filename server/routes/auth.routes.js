@@ -7,6 +7,9 @@ const bcrypt = require("bcrypt")
 const User = require("../models/user.model")
 const { ensureDemoUser } = require("../services/demo.service")
 
+// Portfolio mode: public registration is closed. Flip to true to re-open.
+const REGISTRATION_OPEN = false
+
 const salt = bcrypt.genSaltSync(10)
 
 // Exhibition mode: logs in (or creates) the read-only demo user with no
@@ -28,6 +31,11 @@ router.post("/demo-login", (req, res) => {
 })
 
 router.post("/signup", (req, res) => {
+
+    if (!REGISTRATION_OPEN) {
+        res.status(403).json({ message: 'Registrations are closed. Try the demo user instead.' })
+        return
+    }
 
     const { name, username, password } = req.body
 
