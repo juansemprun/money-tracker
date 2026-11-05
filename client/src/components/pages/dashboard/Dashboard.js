@@ -49,8 +49,8 @@ const Dashboard = props => {
                 const incomes = serviceData
                 response.data.map(elm => serviceData.push(elm))
                 setlineChartData(serviceData)
-                setTotalExpenses(serviceData.filter(elm => elm.amount < 0).map(elm => elm.amount).reduce((acc, curr) => acc + curr))
-                setTotalIncomes(serviceData.filter(elm => elm.amount > 0).map(elm => elm.amount).reduce((acc, curr) => acc + curr))
+                setTotalExpenses(serviceData.filter(elm => elm.amount < 0).map(elm => elm.amount).reduce((acc, curr) => acc + curr, 0))
+                setTotalIncomes(serviceData.filter(elm => elm.amount > 0).map(elm => elm.amount).reduce((acc, curr) => acc + curr, 0))
                 console.log(totalExpenses)
             })
             .catch(err => console.log('Err getting user transactions: ', { err }))
